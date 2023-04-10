@@ -10,8 +10,8 @@ import (
 
 func RenderTemplate(w http.ResponseWriter, templ string) {
 
-	// create a template cahce
-	tc, err := createTemplateCahce()
+	// get the template cache from the app config
+	tc, err := CreateTemplateCahce()
 	if err != nil {
 		log.Fatal("error parsing files: ", err)
 	}
@@ -39,7 +39,7 @@ func RenderTemplate(w http.ResponseWriter, templ string) {
 
 }
 
-func createTemplateCahce() (map[string]*template.Template, error) {
+func CreateTemplateCahce() (map[string]*template.Template, error) {
 	myCahce := map[string]*template.Template{}
 
 	// GET ALL THE FILES THAT END WITH .PAGE.TMPL FROM ./TEMPLATES
