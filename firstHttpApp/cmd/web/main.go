@@ -32,10 +32,6 @@ func main() {
 
 	render.NewTemplates(&app)
 
-	// http.HandleFunc("/", handlers.Repo.Home)
-	// http.HandleFunc("/about", handlers.Repo.About)
-	// _ = http.ListenAndServe(portNumber, nil)
-
 	srv := &http.Server{
 		Addr:    portNumber,
 		Handler: routes(&app),
