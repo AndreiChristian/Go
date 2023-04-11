@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"log"
 	"myapp/pkg/config"
-	"myapp/pkg/handlers"
+	"myapp/pkg/models"
 	"net/http"
 	"path/filepath"
 	"text/template"
@@ -17,7 +17,11 @@ func NewTemplates(a *config.AppConfig) {
 	app = a
 }
 
-func RenderTemplate(w http.ResponseWriter, templ string, td *handlers.TemplateData) {
+func AddDefaultData(td *models.TemplateData) *models.TemplateData {
+	return td
+}
+
+func RenderTemplate(w http.ResponseWriter, templ string, td *models.TemplateData) {
 
 	var tc map[string]*template.Template
 
@@ -39,7 +43,9 @@ func RenderTemplate(w http.ResponseWriter, templ string, td *handlers.TemplateDa
 
 	buf := new(bytes.Buffer)
 
-	err := t.Execute(buf, nil)
+	td = AddDefaultData(td)
+
+	err := t.Execute(buf, td)
 
 	if err != nil {
 		log.Println(err)

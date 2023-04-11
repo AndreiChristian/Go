@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"myapp/pkg/config"
+	"myapp/pkg/models"
 	"myapp/pkg/render"
 	"net/http"
 )
@@ -40,7 +41,7 @@ func NewHandlers(r *Repository) {
 }
 
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "home.page.tmpl", &TemplateData{})
+	render.RenderTemplate(w, "home.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
@@ -48,7 +49,7 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	stringMap := make(map[string]string)
 	stringMap["test"] = "hello again"
 
-	render.RenderTemplate(w, "about.page.tmpl", &TemplateData{
+	render.RenderTemplate(w, "about.page.tmpl", &models.TemplateData{
 		StringMap: stringMap,
 	})
 }
