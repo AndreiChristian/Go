@@ -3,18 +3,24 @@ package render
 import (
 	"bytes"
 	"log"
+	"myapp/pkg/config"
 	"net/http"
 	"path/filepath"
 	"text/template"
 )
 
+var app *config.AppConfig
+
+// new templates sets the config for the template package
+func NewTemplates(a *config.AppConfig) {
+	app = a
+}
+
 func RenderTemplate(w http.ResponseWriter, templ string) {
 
 	// get the template cache from the app config
-	tc, err := CreateTemplateCahce()
-	if err != nil {
-		log.Fatal("error parsing files: ", err)
-	}
+
+	tc := app.TemplateCache
 	// get requested template from cahce
 
 	t, ok := tc[templ]
@@ -25,7 +31,7 @@ func RenderTemplate(w http.ResponseWriter, templ string) {
 
 	buf := new(bytes.Buffer)
 
-	err = t.Execute(buf, nil)
+	err := t.Execute(buf, nil)
 
 	if err != nil {
 		log.Println(err)
