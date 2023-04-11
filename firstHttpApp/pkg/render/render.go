@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"log"
 	"myapp/pkg/config"
+	"myapp/pkg/handlers"
 	"net/http"
 	"path/filepath"
 	"text/template"
@@ -16,11 +17,18 @@ func NewTemplates(a *config.AppConfig) {
 	app = a
 }
 
-func RenderTemplate(w http.ResponseWriter, templ string) {
+func RenderTemplate(w http.ResponseWriter, templ string, td *handlers.TemplateData) {
+
+	var tc map[string]*template.Template
+
+	if app.UseCache {
+		tc = app.TemplateCache
+	} else {
+		tc, _ = CreateTemplateCahce()
+	}
 
 	// get the template cache from the app config
 
-	tc := app.TemplateCache
 	// get requested template from cahce
 
 	t, ok := tc[templ]
