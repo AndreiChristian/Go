@@ -16,5 +16,16 @@ func main() {
 		})
 	})
 
+	app.Get("/about/:name", func(c *fiber.Ctx) error {
+		if c.Params("name") != "" {
+			return c.SendString("Hello " + c.Params("name"))
+		}
+		return c.SendString("Which name?")
+	})
+
+	app.Get("/api/:name/:age/:country", func(c *fiber.Ctx) error {
+		return c.SendString(c.Params("name") + " is " + c.Params("age") + " years old and is from " + c.Params("country") + " .")
+	})
+
 	app.Listen(":3000")
 }
