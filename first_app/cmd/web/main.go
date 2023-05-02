@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-var portNumber = ":8090"
+var portNumber = ":8081"
 
 func main() {
 
@@ -14,6 +14,9 @@ func main() {
 	http.HandleFunc("/about", handlers.About)
 
 	_, _ = fmt.Printf("Starting the application on port %s", portNumber)
-	_ = http.ListenAndServe(portNumber, nil)
+	err := http.ListenAndServe(portNumber, nil)
+	if err != nil {
+		fmt.Println(err)
+	}
 
 }

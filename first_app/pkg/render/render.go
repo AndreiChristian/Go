@@ -7,11 +7,16 @@ import (
 )
 
 func RenderTemplate(w http.ResponseWriter, tmpl string) {
-	parsedTemplate, _ := template.ParseFiles("./templates/" + tmpl)
-	err := parsedTemplate.Execute(w, nil)
+	parsedTemplate, err := template.ParseFiles("./templates/"+tmpl, "./templates/base.layout.tmpl")
+
 	if err != nil {
-		fmt.Println("Error parsing files", err)
+		fmt.Println("Error parsing template files:", err)
 		return
 	}
 
+	err = parsedTemplate.Execute(w, nil)
+	if err != nil {
+		fmt.Println("Error executing template:", err)
+		return
+	}
 }
