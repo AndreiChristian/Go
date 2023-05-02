@@ -1,9 +1,14 @@
 package main
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
+)
 
 func main() {
 	app := fiber.New()
+
+	app.Use(cors.New())
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Hello FROM GO FIBER")
@@ -26,6 +31,8 @@ func main() {
 	app.Get("/api/:name/:age/:country", func(c *fiber.Ctx) error {
 		return c.SendString(c.Params("name") + " is " + c.Params("age") + " years old and is from " + c.Params("country") + " .")
 	})
+
+	app.Static("/hello", "./public")
 
 	app.Listen(":3000")
 }
