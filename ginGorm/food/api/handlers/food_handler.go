@@ -9,6 +9,13 @@ import (
 )
 
 func RegisterFoodHandlers(r *gin.Engine, db *gorm.DB) {
+
+	r.GET("/foods", func(c *gin.Context) {
+		var foods []models.Food
+		db.Find(&foods)
+		c.JSON(200, foods)
+	})
+
 	r.POST("/foods", func(c *gin.Context) {
 		var food models.Food
 		if err := c.ShouldBindJSON(&food); err != nil {
