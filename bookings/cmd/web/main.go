@@ -2,14 +2,13 @@ package main
 
 import (
 	"fmt"
+	"github.com/alexedwards/scs/v2"
+	"github.com/tsawler/bookings-app/pkg/config"
+	"github.com/tsawler/bookings-app/pkg/handlers"
+	"github.com/tsawler/bookings-app/pkg/render"
 	"log"
 	"net/http"
 	"time"
-
-	"github.com/alexedwards/scs/v2"
-	"github.com/andreichristian/bookings-app/pkg/config"
-	"github.com/andreichristian/bookings-app/pkg/handlers"
-	"github.com/andreichristian/bookings-app/pkg/render"
 )
 
 const portNumber = ":8080"
@@ -44,7 +43,7 @@ func main() {
 
 	render.NewTemplates(&app)
 
-	_, _ = fmt.Printf("Staring application on port %s", portNumber)
+	fmt.Println(fmt.Sprintf("Staring application on port %s", portNumber))
 
 	srv := &http.Server{
 		Addr:    portNumber,
